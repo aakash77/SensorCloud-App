@@ -1,0 +1,16 @@
+{
+  "name": "281-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "author": "Team 2",
+  "license": "ISC",
+  "dependencies":{
+  	"express" : "*",
+  	"debug":"*",
+  	"ejs":"*"
+  }
+}
