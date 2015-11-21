@@ -1,5 +1,5 @@
 {
-  "name": "281-app",
+  "name": "SensorCloud-App",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -11,6 +11,14 @@
   "dependencies":{
   	"express" : "*",
   	"debug":"*",
-  	"ejs":"*"
+  	"ejs":"*",
+    "cookie-parser": "*",
+    "body-parser": "*",
+    "express-session": "*",
+    "passport": "*",
+    "passport-local": "*",
+    "mongoose": "*",
+    "bcrypt-nodejs" : "*",
+    "connect-flash" : "*"
   }
 }

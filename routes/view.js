@@ -1,12 +1,19 @@
 var view = require('express').Router();
 
 
-view.get('/',function(req,res){
+var isAuthenticated = function (req, res, next) {
+	if (req.isAuthenticated())
+		return next();
+	res.redirect('/');
+}
 
-	res.render('index');
+module.exports = function(passport){
 
-});
+	view.get('/',function(req,res){
 
-module.exports = (function(){
+		res.render('index');
+
+	});
+
 	return view;
-})();
+}
