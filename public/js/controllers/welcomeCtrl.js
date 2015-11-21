@@ -3,12 +3,7 @@ sensorCloud.controller("WelcomeCtrl", function($scope,DataService) {
 
 	var ctrl = this;
 	ctrl.email="",ctrl.name="",ctrl.password="";
-	/*ctrl.initFunction = function(){
-
-		console.log("in init");
-
-	};*/
-
+	
 	//Login Button Callback
 	ctrl.loginBtn = function(){
 
