@@ -1,33 +1,35 @@
-/**
- * New node file
- */
-myFacebook.service('dataService',function($http){
-	this.getData = function(URI,callback){
+sensorCloud.service('DataService', function($http) {
+
+	this.getData = function(dataURI, params) {
 		return $http({
 			method : 'GET',
-			url : "/api/" + URI
-		}).success(function(res){
-			console.log("in getData success");
-			callback(null,res);
-		}).error(function(err){
-			console.log("Error in GET " + "/api/" + URI);
-			callback(err);
+			url : dataURI,
+			data : params
 		});
 	};
-	
-	this.postData = function(URI,details,callback){
-		console.log("in postData line:18");
+
+	this.postData = function(dataURI, params) {
 		return $http({
 			method : 'POST',
-			url : "/api/" +URI,
-			data : details
-		}).success(function(res){
-			console.log("in postData line:24");
-			callback(null,res);
-		}).error(function(err){
-			console.log("in data service error");
-			/*console.log("Error in POST " + "/api/" + URI);*/
-			callback(err);
+			url : dataURI,
+			data : params
 		});
 	};
+
+	this.putData = function(dataURI, params) {
+		return $http({
+			method : 'PUT',
+			url : dataURI,
+			data : params
+		});
+	};
+
+	this.deleteData = function(dataURI, params) {
+		return $http({
+			method : 'DELETE',
+			url : dataURI,
+			data : params
+		});
+	};
+
 });

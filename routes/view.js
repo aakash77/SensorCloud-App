@@ -15,5 +15,9 @@ module.exports = function(passport){
 
 	});
 
+	view.get('/partials/:page',function(req,res){
+		res.render('partials/'+req.params.page);
+	});
+
 	return view;
 }

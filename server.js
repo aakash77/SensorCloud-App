@@ -36,10 +36,8 @@ var view = require('./routes/view')(passport),
 
 //Middleware before any request
 server.use(function(req,res,next){
-
 	console.log(req.url);
 	next();
-
 });
 
 //Request Mapping

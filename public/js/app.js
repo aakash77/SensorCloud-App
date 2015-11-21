@@ -1,12 +1,9 @@
-/**
- * New node file
- */
 'use strict';
-var myFacebook = angular.module("myFacebook",['ngRoute','ui.bootstrap'])
+var sensorCloud = angular.module("sensorCloud",['ngRoute','ui.bootstrap'])
 .config(function($routeProvider,$locationProvider){
 	$routeProvider.when('/',{
-		templateUrl : 'addUser',
-		controller : 'AddUserController'
+		templateUrl : 'partials/welcome',
+		controller : 'WelcomeCtrl'
 	}).when('/api/logIn',{
 		//templateUrl : 'templates/getUser',
 		controller : 'GetUserController'
