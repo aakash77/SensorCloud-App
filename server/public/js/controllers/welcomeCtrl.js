@@ -18,7 +18,7 @@ sensorCloud.controller("WelcomeCtrl", function($scope,DataService,$location) {
 			};
 			DataService.postData(URLs.LOGIN,params).success(function(data){
 				console.log(data);
-				$location.path('/home');
+				$location.path("/home");
 			}).error(function(err){
 				console.log(err);
 			});

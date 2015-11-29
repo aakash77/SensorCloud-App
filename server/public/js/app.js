@@ -1,11 +1,12 @@
 'use strict';
-var sensorCloud = angular.module("sensorCloud",['ngRoute','ui.bootstrap'])
+var sensorCloud = angular.module("sensorCloud",['ngRoute','ui.bootstrap','nvd3ChartDirectives','ngAnimate'])
 .config(function($routeProvider,$locationProvider){
 	$routeProvider.when('/',{
 		templateUrl : 'partials/welcome',
 		controller : 'WelcomeCtrl'
 	}).when('/home',{
-		templateUrl : 'partials/home'
+		templateUrl : 'partials/home',
+		controller : 'HomeCtrl'
 	}).otherwise({
 		redirectTo : '/'
 	});

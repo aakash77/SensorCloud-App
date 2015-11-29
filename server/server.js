@@ -32,7 +32,8 @@ initPassport(passport);
 
 var view = require('./routes/view')(passport),
 	login = require('./routes/login')(passport),
-	user = require('./routes/user')(passport);
+	user = require('./routes/user')(passport),
+	api = require('./routes/api');
 
 //Middleware before any request
 server.use(function(req,res,next){
@@ -43,6 +44,7 @@ server.use(function(req,res,next){
 //Request Mapping
 server.use('/login',login);
 server.use('/user',user);
+server.use('/api',api);
 server.use('/',view);
 
 

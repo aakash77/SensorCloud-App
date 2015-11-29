@@ -1,0 +1,18 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div style="margin-top:25px" ng-controller="HomeCtrl as hm" ng-init="hm.getSensorData()">
+            <nvd3-line-chart id="homeSensor"
+                data="hm.sensorGraphData"
+                showXAxis="true"
+                showYAxis="true"
+                tooltips="true"
+                interactive="true"
+                showLegend="true"
+                width="900"
+                height="350"
+                xAxisTickFormat="hm.xAxisTickFormatFunction()"
+                >
+            </nvd3-line-chart>
+        </div>
+    </div>
+</div>

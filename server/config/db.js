@@ -1,3 +1,4 @@
 module.exports = {
-	'url' : 'mongodb://admin:admin@ds057204.mongolab.com:57204/sensor-cloud'
+	'url' : 'mongodb://admin:admin@ds059654.mongolab.com:59654/sensordb'
+	
 }

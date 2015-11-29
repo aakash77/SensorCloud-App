@@ -4,7 +4,7 @@ sensorCloud.service('DataService', function($http) {
 		return $http({
 			method : 'GET',
 			url : dataURI,
-			data : params
+			params : params
 		});
 	};
 

@@ -3,6 +3,14 @@
 */
 
 var URLs = {
+
 	"LOGIN"	: "/login",
-	"SIGNUP": "/user"
+	"SIGNUP": "/user",
+	"SENSOR_DATA":"/api/sensor_data"
+
+};
+
+var GROUP_OPTIONS = {
+	'area':[''],
+	'city':['']
 };
