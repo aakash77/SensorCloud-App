@@ -3,8 +3,6 @@
 */
 
 var URLs = {
-
 	"LOGIN"	: "/login",
 	"SIGNUP": "/user"
-
 };

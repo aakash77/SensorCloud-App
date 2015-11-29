@@ -4,18 +4,8 @@ var sensorCloud = angular.module("sensorCloud",['ngRoute','ui.bootstrap'])
 	$routeProvider.when('/',{
 		templateUrl : 'partials/welcome',
 		controller : 'WelcomeCtrl'
-	}).when('/api/logIn',{
-		//templateUrl : 'templates/getUser',
-		controller : 'GetUserController'
 	}).when('/home',{
-		templateUrl : 'home',
-		controller : 'GetUserController'
-	}).when('/invalid',{
-		templateUrl : 'templates/invalid',
-		controller : 'GetUserController'
-	}).when('/logout',{
-		templateUrl : 'logout',
-		controller : 'GetUserController'
+		templateUrl : 'partials/home'
 	}).otherwise({
 		redirectTo : '/'
 	});

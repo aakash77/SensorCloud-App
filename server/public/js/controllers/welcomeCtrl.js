@@ -1,5 +1,5 @@
 'use strict';
-sensorCloud.controller("WelcomeCtrl", function($scope,DataService) {
+sensorCloud.controller("WelcomeCtrl", function($scope,DataService,$location) {
 
 	var ctrl = this;
 	ctrl.email="",ctrl.name="",ctrl.password="";
@@ -18,6 +18,7 @@ sensorCloud.controller("WelcomeCtrl", function($scope,DataService) {
 			};
 			DataService.postData(URLs.LOGIN,params).success(function(data){
 				console.log(data);
+				$location.path('/home');
 			}).error(function(err){
 				console.log(err);
 			});
