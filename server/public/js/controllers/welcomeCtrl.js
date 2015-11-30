@@ -1,13 +1,11 @@
 'use strict';
-sensorCloud.controller("WelcomeCtrl", function($scope,DataService,$location) {
+sensorCloud.controller("WelcomeCtrl", function($scope,DataService,$location,$window) {
 
 	var ctrl = this;
 	ctrl.email="",ctrl.name="",ctrl.password="";
 	
 	//Login Button Callback
 	ctrl.loginBtn = function(){
-
-		console.log("inside login button");
 
 		if(!isFormValid("login"))
 			alert("Invalid Form");
@@ -16,8 +14,9 @@ sensorCloud.controller("WelcomeCtrl", function($scope,DataService,$location) {
 				email : ctrl.email,
 				password : ctrl.password
 			};
-			DataService.postData(URLs.LOGIN,params).success(function(data){
-				console.log(data);
+			DataService.postData(URLs.LOGIN,params).success(function(response){
+				$window.sessionStorage.userId = response.data._id;
+				$window.sessionStorage.userId = response.data.email;
 				$location.path("/home");
 			}).error(function(err){
 				console.log(err);
@@ -27,7 +26,6 @@ sensorCloud.controller("WelcomeCtrl", function($scope,DataService,$location) {
 
 	//Signup Button Callback
 	ctrl.signUpBtn = function(){
-		console.log("inside signup button");
 
 		if(!isFormValid("signup"))
 			alert("Invalid Form");
@@ -37,15 +35,15 @@ sensorCloud.controller("WelcomeCtrl", function($scope,DataService,$location) {
 				password : ctrl.password,
 				name : ctrl.name
 			};
-			DataService.postData(URLs.SIGNUP,params).success(function(data){
-				console.log(data);
+			DataService.postData(URLs.SIGNUP,params).success(function(response){
+				$window.sessionStorage.userId = response.data._id;
+				$window.sessionStorage.userId = response.data.email;
+				$location.path("/home");
 			}).error(function(err){
 				console.log(err);
 			});
 		}
-
 	};
-
 	//Check form validation
 	function isFormValid(formName){
 

@@ -10,8 +10,6 @@ sensorCloud.service('GraphService', function() {
         }
        var numsensors = ($.unique(names)).length;
        var sensoridmap = ($.unique(names));
-       console.log("numsensors",numsensors);
-       
        //create empty array for distributing sensor data acc to sensor id
         var sensordataarray = [];
         for(var x=0;x<numsensors;x++)
@@ -23,15 +21,13 @@ sensorCloud.service('GraphService', function() {
         //divide sensor data into array created above
         for(var y=0;y<response.length;y++)
         {
-          var temparray2 = [response[y].timestmp,response[y][yAxis]];
+          var temparray2 = [response[y].timestamp,response[y][yAxis]];
           var i = response[y].sensorid;
           var ind = sensoridmap.indexOf(i);
           sensordataarray[ind].push(temparray2);
         }
-        console.log("data divided based on id");
-        console.log(sensordataarray);
-        //data inserted in array
-
+        
+      //data inserted in array
       var graphdata=[];
       for(var j=0;j<numsensors;j++)
       {
@@ -40,9 +36,6 @@ sensorCloud.service('GraphService', function() {
         datajson["values"] = sensordataarray[j];
         graphdata.push(datajson);
       }
-      console.log("graphdata");
-      console.log(JSON.stringify(graphdata));
-      
       var xAxisTickFormatFunction = function() {
             return function(d) {
               return d3.time.format('%H:%M')(new Date(d));
@@ -54,4 +47,21 @@ sensorCloud.service('GraphService', function() {
 
 	};
 
+});
+//To get unique area values
+sensorCloud.filter('unique', function() {
+   return function(collection, keyname) {
+      var output = [], 
+          keys = [];
+
+      angular.forEach(collection, function(item) {
+          var key = item[keyname];
+          if(keys.indexOf(key) === -1) {
+              keys.push(key);
+              output.push(item);
+          }
+      });
+
+      return output;
+   };
 });
