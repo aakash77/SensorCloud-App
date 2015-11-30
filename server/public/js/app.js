@@ -1,5 +1,5 @@
 'use strict';
-var sensorCloud = angular.module("sensorCloud",['ngRoute','ui.bootstrap','nvd3ChartDirectives','ngAnimate'])
+var sensorCloud = angular.module("sensorCloud",['ngRoute','ui.bootstrap','nvd3ChartDirectives','ngAnimate','ngTable'])
 .config(function($routeProvider,$locationProvider){
 	$routeProvider.when('/',{
 		templateUrl : 'partials/welcome',

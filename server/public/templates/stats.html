@@ -1,27 +1,27 @@
-<div ng-controller="HomeCtrl as hm" ng-init="hm.getSensorData()" >
+<div ng-controller="SensorGraphCtrl as sgc" ng-init="sgc.getSensorData()" >
     <div class="row" style="padding-top:2%;">
         <div class="col-xs-8">
             <div class="col-xs-4">
                 <label id="groupByLabel">Group By</label>
-                <select id="groupByElement" ng-model="hm.group" ng-options="groups.group_title for groups in hm.GROUPS" ng-change="hm.groupByChanged()">
+                <select id="groupByElement" ng-model="sgc.group" ng-options="groups.group_title for groups in sgc.GROUPS" ng-change="sgc.groupByChanged()">
                 </select>
             </div>
             <div class="col-xs-8">
                 <label id="groupByFieldLabel">Location</label>
-                <select id="groupByFieldElement" ng-model="hm.groupBy" ng-options="fieldOption for fieldOption in hm.group.values" ng-change="hm.getSensorDataServer()">
+                <select id="groupByFieldElement" ng-model="sgc.groupBy" ng-options="fieldOption for fieldOption in sgc.group.values" ng-change="sgc.getSensorDataServer()">
                 </select>
             </div>
         </div>
         <div class="col-xs-4">
             <label id="yAxisLabel">Y-Axis</label>
-            <select id="yAxisSelectElement" ng-model="hm.yAxisFilter" ng-options="yAxisOptions.title for yAxisOptions in hm.YAXIS_OPTIONS" ng-change="hm.filterGraph()">
+            <select id="yAxisSelectElement" ng-model="sgc.yAxisFilter" ng-options="yAxisOptions.title for yAxisOptions in sgc.YAXIS_OPTIONS" ng-change="sgc.filterGraph()">
             </select>
         </div>
     </div>
     <div class="row" style="margin-top:5%;">
         <div class="col-xs-12">
             <nvd3-line-chart id="homeSensor"
-                data="hm.sensorGraphData"
+                data="sgc.sensorGraphData"
                 showXAxis="true"
                 showYAxis="true"
                 tooltips="true"
@@ -29,7 +29,7 @@
                 showLegend="true"
                 width="900"
                 height="350"
-                xAxisTickFormat="hm.xAxisTickFormatFunction()"
+                xAxisTickFormat="sgc.xAxisTickFormatFunction()"
                 >
             </nvd3-line-chart>
         </div>

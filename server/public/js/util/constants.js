@@ -13,12 +13,12 @@ var URLs = {
 var GROUP_OPTIONS = [
 	{
 		group:'area',
-		values:['San Jose State University'],
+		values:['San Jose State University','Stanford University','San Jose City College','Santa Clara University'],
 		group_title : 'Area'
 	},
 	{
 		group:'city',
-		values:['San Jose'],
+		values:['San Jose','Stanford','Santa Clara'],
 		group_title:'City'
 	}];
 

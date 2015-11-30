@@ -1,0 +1,24 @@
+<div ng-controller="SensorTableCtrl as stc" ng-init="stc.initTable()">
+    <div class="row" style="padding-top:2%;">
+        <div class="col-xs-12">
+            <table ng-table="stc.sensorTableData" class="table" show-filter="true">
+                <tr ng-repeat="user in $data">
+                    <td title="'SensorId'" filter="{ sensorid: 'number'}" sortable="'sensorid'">
+                        {{user.sensorid}}</td>
+                    <td title="'Area'" filter="{ area: 'text'}" sortable="'area'">
+                        {{user.area}}</td>
+                    <td title="'City'" filter="{ city: 'text'}" sortable="'city'">
+                        {{user.city}}</td>
+                    <td title="'Date Time'" filter="{ timestamp: 'yyyy:mm:dd hh:mm'}" sortable="'pressure'">
+                        {{user.timestamp | date}}</td>
+                    <td title="'Temperature'" filter="{ temp: 'number'}" sortable="'temp'">
+                        {{user.temp}}</td>
+                    <td title="'Humidity'" filter="{ humidity: 'number'}" sortable="'humidity'">
+                        {{user.humidity}}</td>
+                    <td title="'Pressure'" filter="{ pressure: 'number'}" sortable="'pressure'">
+                        {{user.pressure}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
