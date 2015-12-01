@@ -14,10 +14,7 @@ http.globalAgent.maxSockets = 10240;
 // Define the servers to load balance.
   /*{host: '128.136.179.46', port: 3000}*/
   /*{host: '128.136.179.59', port: 3000}*/
-var servers = [
-  {host: 'localhost', port: 3000},
-  {host: '128.136.179.241', port: 3000}
-];
+var servers = constants.INITIAL_SERVERS;
 
 // Create a proxy object for each target.
 var proxies = servers.map(function (target) {
