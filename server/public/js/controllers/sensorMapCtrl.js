@@ -1,16 +1,13 @@
 'use strict';
-sensorCloud.controller('SensorMapCtrl', function($scope,DataService,NgMap){
+sensorCloud.controller('SensorMapCtrl', function($window,$scope,DataService,NgMap){
   var vm = this;
 
   vm.initMap = function(){
-      vm.getSensorDataServer();      
+    $scope.user_id = $window.sessionStorage.userId;
+    vm.getSensorDataServer();      
   };
 
   vm.positions = [];
-
-  //Group By options
-    vm.GROUPS = GROUP_OPTIONS;
-    vm.group = vm.GROUPS[0];
     
     
     vm.dynMarkers = []
@@ -28,29 +25,56 @@ sensorCloud.controller('SensorMapCtrl', function($scope,DataService,NgMap){
    });
 
     vm.getSensorDataServer = function(){
-    
-    for(var i = 0; i<4;i++){
-      vm.groupBy = vm.group.values[i];
-      var params = {
-          group : vm.group.group,
-          value : vm.groupBy
-        };
-      
-      DataService.getData(URLs.SENSOR_DATA,params).success(function(response){
-          var rArea = response.data[response.data.length - 1]
-          var areaDetail = [];
-          areaDetail.push(rArea.sensorid);
-          areaDetail.push(rArea.lat);
-          areaDetail.push(rArea.lng);
-          areaDetail.push(rArea.area);
-          areaDetail.push(rArea.city);
-          areaDetail.push(rArea.humidity);
-          areaDetail.push(Math.round(rArea.pressure * 100) / 100);
-          areaDetail.push(rArea.temp);
-          vm.positions.push(areaDetail);
-          console.log(vm.positions);
+    var urlParam = "/"+$scope.user_id+"/sensors";
+      DataService.getData(URLs.USER_DATA+urlParam,{}).success(function(response){
+      //Group By options
+          var areas = response.data.map(function(sensor){
+            return sensor.area;
+          });
+          var cities = response.data.map(function(sensor){
+            return sensor.city;
+          });
+
+          vm.GROUPS=[
+                  {
+                    group:'area',
+                    values:areas,
+                    group_title : 'Area'
+                  },
+                  {
+                    group:'city',
+                    values:cities,
+                    group_title:'City'
+                  }];
+          vm.group = vm.GROUPS[0];
+          
+          vm.groupBy = vm.group.values[0];
+
+          for(var i = 0; i<vm.group.values.length;i++){
+            vm.groupBy = vm.group.values[i];
+            var params = {
+                group : vm.group.group,
+                value : vm.groupBy
+              };
+            
+            DataService.getData(URLs.SENSOR_DATA,params).success(function(response){
+                var rArea = response.data[response.data.length - 1];
+                console.log(response);
+                var areaDetail = [];
+                areaDetail.push(rArea.sensorid);
+                areaDetail.push(rArea.lat);
+                areaDetail.push(rArea.lng);
+                areaDetail.push(rArea.area);
+                areaDetail.push(rArea.city);
+                areaDetail.push(rArea.humidity);
+                areaDetail.push(Math.round(rArea.pressure * 100) / 100);
+                areaDetail.push(rArea.temp);
+                vm.positions.push(areaDetail);
+                console.log(vm.positions);
+            });
+          }
+
       });
-    }
     };
 });
 
