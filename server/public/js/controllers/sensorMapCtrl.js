@@ -1,5 +1,5 @@
 'use strict';
-sensorCloud.controller('SensorMapCtrl', function($window,$scope,DataService,NgMap){
+sensorCloud.controller('SensorMapCtrl', function($window,$scope,DataService,NgMap,$interval){
   var vm = this;
 
   vm.initMap = function(){
@@ -52,6 +52,14 @@ sensorCloud.controller('SensorMapCtrl', function($window,$scope,DataService,NgMa
 
           for(var i = 0; i<vm.group.values.length;i++){
             vm.groupBy = vm.group.values[i];
+            displayOnMap();                          
+          }
+          $interval( function(){ displayOnMap(); }, DATA_INTERVAL);
+      });
+    };
+
+    function displayOnMap(){
+
             var params = {
                 group : vm.group.group,
                 value : vm.groupBy
@@ -72,10 +80,10 @@ sensorCloud.controller('SensorMapCtrl', function($window,$scope,DataService,NgMa
                 vm.positions.push(areaDetail);
                 console.log(vm.positions);
             });
-          }
-
-      });
     };
+
+
+
 });
 
 // "San Jose State University"

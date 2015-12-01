@@ -1,19 +1,20 @@
 'use strict';
-sensorCloud.controller("SensorTableCtrl", function($scope,DataService,NgTableParams,$window) {
+sensorCloud.controller("SensorTableCtrl", function($scope,DataService,NgTableParams,$window,$interval) {
 
     var stc = this;
 
     stc.initTable = function(){
         $scope.user_id = $window.sessionStorage.userId;
-        stc.getSensorTableData();      
-
+        stc.getSensorTableData();
+        $interval( function(){ stc.getSensorTableData(); }, DATA_INTERVAL);
     };
 
 
     stc.getSensorTableData = function(){
       var urlParam = "/"+$scope.user_id+"/sensor_data";
         DataService.getData(URLs.USER_DATA+urlParam,{}).success(function(response){
-        stc.sensorTableData = new NgTableParams({ count: 7},{dataset: response.data});
+            console.log("received table data");
+            stc.sensorTableData = new NgTableParams({ count: 7},{dataset: response.data});
       });
     };
 

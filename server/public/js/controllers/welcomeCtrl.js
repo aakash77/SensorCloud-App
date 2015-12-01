@@ -17,6 +17,7 @@ sensorCloud.controller("WelcomeCtrl", function($scope,DataService,$location,$win
 			DataService.postData(URLs.LOGIN,params).success(function(response){
 				$window.sessionStorage.userId = response.data._id;
 				$window.sessionStorage.userEmail = response.data.email;
+				$window.sessionStorage.userName = response.data.name;
 				$location.path("/home");
 			}).error(function(err){
 				console.log(err);
@@ -38,6 +39,7 @@ sensorCloud.controller("WelcomeCtrl", function($scope,DataService,$location,$win
 			DataService.postData(URLs.SIGNUP,params).success(function(response){
 				$window.sessionStorage.userId = response.data._id;
 				$window.sessionStorage.userId = response.data.email;
+				$window.sessionStorage.userName = response.data.name;
 				$location.path("/home");
 			}).error(function(err){
 				console.log(err);

@@ -12,6 +12,8 @@ var URLs = {
 	"SENSOR_INFO" : "/api/sensor"
 };
 
+var DATA_INTERVAL = 7000;
+
 /*var GROUP_OPTIONS = [
 	{
 		group:'area',

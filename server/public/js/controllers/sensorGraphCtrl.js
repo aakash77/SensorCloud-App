@@ -1,8 +1,8 @@
 'use strict';
-sensorCloud.controller("SensorGraphCtrl", function($scope,$window,DataService,GraphService) {
+sensorCloud.controller("SensorGraphCtrl", function($scope,$window,DataService,GraphService,$interval) {
 
   var sgc = this;
-
+  
   sgc.getSensorData = function(){
     $scope.user_id = $window.sessionStorage.userId;
     //Group By options and sensor data
@@ -10,10 +10,10 @@ sensorCloud.controller("SensorGraphCtrl", function($scope,$window,DataService,Gr
     //Yaxis filter options
     sgc.YAXIS_OPTIONS = YAXIS_OPTIONS;
     sgc.yAxisFilter = YAXIS_OPTIONS[0];
-    
 };
   //Get sensor data
   sgc.getSensorDataServer = function(){
+    console.log("get graph data from server");
     var params = {
           group : sgc.group.group,
           value : sgc.groupBy
@@ -52,6 +52,7 @@ sensorCloud.controller("SensorGraphCtrl", function($scope,$window,DataService,Gr
           sgc.group = sgc.GROUPS[0];
           sgc.groupBy = sgc.group.values[0];
           sgc.getSensorDataServer();
+          $interval( function(){ sgc.getSensorDataServer(); }, DATA_INTERVAL);
       });
   };
 	
