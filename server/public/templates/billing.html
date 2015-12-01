@@ -1,0 +1,50 @@
+<div ng-controller="BillingCtrl as bc" ng-init="bc.getSensorData()" >
+<div class="row" style="padding-top:5%;">
+        <div class="col-xs-5">
+            <div class="input-group">
+              <div class="input-group-addon">Username: </div>
+              <label class="form-control" for="username">{{user_name}}</label>
+            </div>
+            <br/>
+            <div class="input-group">
+              <div style="padding-right:42px;" class="input-group-addon">Email:</div>
+              <label class="form-control" for="email">{{user_email}}</label>
+            </div>
+            <br/>
+        </div>
+        <div class="col-xs-12">
+            <div class="panel panel-primary">
+                <table class="table table-striped table-bordered">
+                    <thead style="background-color: #337ab7;color: white;">
+                        <tr>
+                            <td>City</td>
+                            <td>No of Sensors</td>
+                            <td>Price/Sensor</td>
+                            <td>Subtotal</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="(key,value) in bc.userSensors">
+                            <td>{{key}}</td>
+                            <td>{{value}}</td>
+
+                            <td ng-bind="priceCity[key] | currency"></td>
+
+                            <td ng-bind="priceCity[key]*value | currency"></td>
+
+
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>Total:  {{total | currency}}</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

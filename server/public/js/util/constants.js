@@ -37,3 +37,10 @@ var YAXIS_OPTIONS = [
 		'title':'Pressure',value:'pressure'
 	}
 	];
+
+var PRICE_CITIES = 
+	{
+		"San Jose":10,
+		"Santa Clara":15,
+		"Stanford":25
+	};
