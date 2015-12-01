@@ -19,5 +19,20 @@ var sensorCloud = angular.module("sensorCloud",['ngRoute','ui.bootstrap','nvd3Ch
 		enabled : true,
 		requireBase : false
 	});
+
+
 	
-});
+}).run(['$rootScope','$window','$location','$templateCache',function($rootScope,$window, $location,$templateCache) {
+	
+	$rootScope.$on('$routeChangeStart', function(event,next, current) {
+		
+		if (typeof(current) !== 'undefined'){
+            $templateCache.remove(current.templateUrl);
+        }
+		
+		if($window.sessionStorage.userId)
+			$location.path('/home');
+		else
+			$location.path('/');
+	});
+}]);

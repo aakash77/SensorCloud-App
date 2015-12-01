@@ -6,7 +6,8 @@ var URLs = {
 
 	"LOGIN"	: "/login",
 	"SIGNUP": "/user",
-	"SENSOR_DATA":"/api/sensor_data"
+	"SENSOR_DATA":"/api/sensor_data",
+	"LOGOUT": "/logout"
 
 };
 

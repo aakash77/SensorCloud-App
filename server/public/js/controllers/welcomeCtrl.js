@@ -16,7 +16,7 @@ sensorCloud.controller("WelcomeCtrl", function($scope,DataService,$location,$win
 			};
 			DataService.postData(URLs.LOGIN,params).success(function(response){
 				$window.sessionStorage.userId = response.data._id;
-				$window.sessionStorage.userId = response.data.email;
+				$window.sessionStorage.userEmail = response.data.email;
 				$location.path("/home");
 			}).error(function(err){
 				console.log(err);
