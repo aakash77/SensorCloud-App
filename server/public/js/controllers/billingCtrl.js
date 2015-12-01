@@ -12,8 +12,8 @@ sensorCloud.controller("BillingCtrl", function($scope,$window,DataService) {
     
     //Get Price per sensor for cities
     $scope.priceCity = PRICE_CITIES;
-    console.log("price for cities");
-    console.log($scope.priceCity);
+    /*console.log("price for cities");*/
+    /*console.log($scope.priceCity);*/
     
 };
   
@@ -23,8 +23,8 @@ sensorCloud.controller("BillingCtrl", function($scope,$window,DataService) {
       var urlParam = "/"+$scope.user_id+"/sensors";
       DataService.getData(URLs.USER_DATA+urlParam,{}).success(function(response){
           
-          console.log("Sensors selected by the user");
-          console.log(response.data);
+          /*console.log("Sensors selected by the user");
+          console.log(response.data);*/
           bc.userSensors = response.data;
 
           bc.userSensors = bc.groupByLoc(bc.userSensors,"city");

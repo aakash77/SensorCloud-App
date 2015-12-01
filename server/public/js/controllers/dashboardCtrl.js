@@ -12,7 +12,7 @@ sensorCloud.controller("DashboardCtrl", function($scope,$window,DataService,NgTa
     dc.getAllAvailableSensors = function(){
       var urlParams = "/"+$scope.user_id+"/sensors_available";
       DataService.getData(URLs.USER_DATA+urlParams,{}).success(function(response){
-          console.log(response.data);
+          /*console.log(response.data);*/
           dc.availableSensorsData = response.data; 
           dc.availableSensorTableData = new NgTableParams({ count: 7},{dataset: response.data});
       }).error(function(err){
@@ -24,7 +24,7 @@ sensorCloud.controller("DashboardCtrl", function($scope,$window,DataService,NgTa
     dc.getUserSensors = function(){
       var urlParams = "/"+$scope.user_id+"/sensors";
       DataService.getData(URLs.USER_DATA+urlParams,{}).success(function(response){
-          console.log(response.data);
+          /*console.log(response.data);*/
           dc.userSensorsData = response.data; 
           dc.userSensorTableData = new NgTableParams({ count: 7},{dataset: response.data});
       }).error(function(err){

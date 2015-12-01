@@ -6,7 +6,7 @@ sensorCloud.controller("SensorTableCtrl", function($scope,DataService,NgTablePar
     stc.initTable = function(){
         $scope.user_id = $window.sessionStorage.userId;
         stc.getSensorTableData();
-        $interval( function(){ stc.getSensorTableData(); }, DATA_INTERVAL);
+        stc.tableInterval = $interval( function(){ stc.getSensorTableData(); }, DATA_INTERVAL);
     };
 
 
@@ -18,6 +18,9 @@ sensorCloud.controller("SensorTableCtrl", function($scope,DataService,NgTablePar
       });
     };
 
-    
+    $scope.$on('$destroy',function(){
+      if(stc.tableInterval)
+          $interval.cancel(stc.tableInterval);
+      });
 
 });

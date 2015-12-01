@@ -3,6 +3,7 @@ sensorCloud.controller('SensorMapCtrl', function($window,$scope,DataService,NgMa
   var vm = this;
 
   vm.initMap = function(){
+    vm.isReady = 0;
     $scope.user_id = $window.sessionStorage.userId;
     vm.getSensorDataServer();      
   };
@@ -29,10 +30,17 @@ sensorCloud.controller('SensorMapCtrl', function($window,$scope,DataService,NgMa
       DataService.getData(URLs.USER_DATA+urlParam,{}).success(function(response){
       //Group By options
           var areas = response.data.map(function(sensor){
-            return sensor.area;
+              return sensor.area;
           });
+          areas = areas.filter(function(item,i,a){
+              return i==a.indexOf(item);
+          });
+          //filter for unique values
           var cities = response.data.map(function(sensor){
-            return sensor.city;
+              return sensor.city;
+          });
+          cities = cities.filter(function(item,i,a){
+              return i==a.indexOf(item);
           });
 
           vm.GROUPS=[
@@ -54,7 +62,7 @@ sensorCloud.controller('SensorMapCtrl', function($window,$scope,DataService,NgMa
             vm.groupBy = vm.group.values[i];
             displayOnMap();                          
           }
-          $interval( function(){ displayOnMap(); }, DATA_INTERVAL);
+          vm.mapInterval = $interval( function(){ displayOnMap(); }, DATA_INTERVAL);
       });
     };
 
@@ -67,7 +75,8 @@ sensorCloud.controller('SensorMapCtrl', function($window,$scope,DataService,NgMa
             
             DataService.getData(URLs.SENSOR_DATA,params).success(function(response){
                 var rArea = response.data[response.data.length - 1];
-                console.log(response);
+                console.log("received map data from server");
+                /*console.log(response);*/
                 var areaDetail = [];
                 areaDetail.push(rArea.sensorid);
                 areaDetail.push(rArea.lat);
@@ -78,11 +87,15 @@ sensorCloud.controller('SensorMapCtrl', function($window,$scope,DataService,NgMa
                 areaDetail.push(Math.round(rArea.pressure * 100) / 100);
                 areaDetail.push(rArea.temp);
                 vm.positions.push(areaDetail);
-                console.log(vm.positions);
+                vm.isReady = 1;
+                /*console.log(vm.positions);*/
             });
     };
 
-
+    $scope.$on('$destroy',function(){
+      if(vm.mapInterval)
+          $interval.cancel(vm.mapInterval);
+      });
 
 });
 

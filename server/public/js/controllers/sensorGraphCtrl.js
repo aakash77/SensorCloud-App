@@ -31,10 +31,17 @@ sensorCloud.controller("SensorGraphCtrl", function($scope,$window,DataService,Gr
       DataService.getData(URLs.USER_DATA+urlParam,{}).success(function(response){
           
           var areas = response.data.map(function(sensor){
-            return sensor.area;
+              return sensor.area;
           });
+          areas = areas.filter(function(item,i,a){
+              return i==a.indexOf(item);
+          });
+          //filter for unique values
           var cities = response.data.map(function(sensor){
-            return sensor.city;
+              return sensor.city;
+          });
+          cities = cities.filter(function(item,i,a){
+              return i==a.indexOf(item);
           });
 
           sgc.GROUPS=[
@@ -52,7 +59,7 @@ sensorCloud.controller("SensorGraphCtrl", function($scope,$window,DataService,Gr
           sgc.group = sgc.GROUPS[0];
           sgc.groupBy = sgc.group.values[0];
           sgc.getSensorDataServer();
-          $interval( function(){ sgc.getSensorDataServer(); }, DATA_INTERVAL);
+          sgc.graphInterval = $interval( function(){ sgc.getSensorDataServer(); }, DATA_INTERVAL);
       });
   };
 	
@@ -72,5 +79,10 @@ sensorCloud.controller("SensorGraphCtrl", function($scope,$window,DataService,Gr
     sgc.groupBy = sgc.group.values[0];
     sgc.getSensorDataServer();
   };
+
+  $scope.$on('$destroy',function(){
+    if(sgc.graphInterval)
+        $interval.cancel(sgc.graphInterval);
+  });
 
 });
