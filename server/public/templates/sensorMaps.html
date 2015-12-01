@@ -1,0 +1,13 @@
+<div ng-controller="SensorMapCtrl as smc" ng-init="smc.initMap()">
+  <ng-map zoom="6" center="[37.436034, -122.088854]" style="height:600px">
+    <custom-marker position="[{{p[1]}}, {{p[2]}}]" ng-repeat="p in smc.positions">
+      <div class="cm" style="background:#fff;">
+        <p><center><b>{{p[3]}}</b></center></p>
+        <img src="../images/humidity.png" width="18px"> {{p[5]}}% |
+        <img src="../images/pressure.png" width="18px"> {{p[6]}} Hg |
+        <img src="../images/temp.png" width="18px"> {{p[7]}}°  
+        <!-- ({{p[1]}},{{p[2]}}) -->
+      </div>
+    </custom-marker>
+  </ng-map>
+</div>
