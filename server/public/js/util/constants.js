@@ -7,11 +7,12 @@ var URLs = {
 	"LOGIN"	: "/login",
 	"SIGNUP": "/user",
 	"SENSOR_DATA":"/api/sensor_data",
-	"LOGOUT": "/logout"
-
+	"LOGOUT": "/logout",
+	"USER_DATA":"/api/user",
+	"SENSOR_INFO" : "/api/sensor"
 };
 
-var GROUP_OPTIONS = [
+/*var GROUP_OPTIONS = [
 	{
 		group:'area',
 		values:['San Jose State University','Stanford University','San Jose City College','Santa Clara University'],
@@ -21,7 +22,7 @@ var GROUP_OPTIONS = [
 		group:'city',
 		values:['San Jose','Stanford','Santa Clara'],
 		group_title:'City'
-	}];
+	}];*/
 
 var YAXIS_OPTIONS = [
 	{

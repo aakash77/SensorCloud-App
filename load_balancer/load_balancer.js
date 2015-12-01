@@ -1,11 +1,10 @@
 var http = require('http'),
   fs = require('fs'),
   proxy = require('http-proxy'),
-  request = require('request');
-
+  request = require('request'),
+  constants = require('./constants');
 
 var TIMEOUT = 5000,
-  failoverTimer=[],
   RETRY = 1,
   previousIndex=-1;
 
@@ -33,14 +32,13 @@ var proxies = servers.map(function (target) {
  */
 var selectServer = function(req, res) {
   previousIndex++;
-  //Randomnly selected
-  //var selectedServer = Math.floor(Math.random() * proxies.length);
 
   //Round Robin
   var selectedServer = previousIndex%proxies.length;
   
   //check if the selected server is down
   if(proxies[selectedServer].options.down){
+    requestFailHandler(selectedServer);
     selectedServer++;
     var foundRunning = false;
     var attempts = 0;
@@ -56,13 +54,12 @@ var selectServer = function(req, res) {
     }
     if(!foundRunning)
       selectedServer=-1;
+    else
+      console.log("Redirecting request at "+proxies[selectedServer].options.target.host);
   }
-  console.log("Redirecting request at "+proxies[selectedServer].options.target.host);
   previousIndex = selectedServer;
   return selectedServer;
 };
-
-//var retries = 0;
 
 //Handle Server failure
 var requestFailHandler = function(index) {
@@ -83,68 +80,11 @@ var requestFailHandler = function(index) {
   }
 };  
 
- /* if (failoverTimer) {
-    return;
-  }
-  failoverTimer = setTimeout(function(){
-      request({
-        url: 'http://' + proxies[index].options.target.host + ':' + proxies[index].options.target.port,
-        method: 'HEAD',
-        timeout: TIMEOUT  
-      },function(err,resp,body){
-          if (resp && resp.statusCode === 200) {
-            proxies[index].options.down = false;
-            console.log('Server ' + proxies[index].options.target.host + ' is back up.');
-            retries=0;
-            //proxyRequest(req,res,index);
-            return ;
-          } else {
-            proxies[index].options.down = true;
-            retries++;
-            console.log('Server ' + proxies[index].options.target.host + ' is still down.');
-            requestFailHandler(index,req,res);
-          }    
-      });
-  },TIMEOUT);*/
-
-
- /* if (failoverTimer[index]) {
-    return;
-  }
-  if(retries >= RETRY){
-    renderErrorPage(res);
-    return ;
-  }
-
-  failoverTimer[index] = setTimeout(function() {
-    // Check if the server is up or not
-    request({
-      url: 'http://' + proxies[index].options.target.host + ':' + proxies[index].options.target.port,
-      method: 'HEAD',
-      timeout: TIMEOUT
-    }, function(err, resp, body) {
-      failoverTimer[index] = null;
-      if (resp && resp.statusCode === 200) {
-        proxies[index].options.down = false;
-        console.log('Server ' + proxies[index].options.target.host + ' is back up.');
-        retries=0;
-        proxyRequest(req,res,index);
-        return ;
-      } else {
-        proxies[index].options.down = true;
-        retries++;
-        console.log('Server ' + proxies[index].options.target.host + ' is still down.');
-        requestFailHandler(index,req,res);
-      }
-    });
-  }, TIMEOUT);*/
-
 //Render Error Page
 var renderErrorPage = function(response){
     fs.readFile('./views/error.html',function(err,html){
-        response.writeHeader(200, {"Content-Type": "text/html"});  
-        response.write(html);
-        response.end();
+        response.writeHeader(503, {"Content-Type": "text/html"});
+        response.end(html.toString());
     });
 };
 
@@ -154,16 +94,19 @@ var proxyRequest = function(req,res,index){
   if(index<0){
     renderErrorPage(res);
   }
-  var proxy = proxies[index];
-  if(proxy){
-    proxy.web(req, res);
-    proxy.on('error', function(err) {
-      requestFailHandler(index);
-      proxyRequest(req,res,selectServer());
-    });  
+  else{
+    var proxy = proxies[index];
+    if(proxy){
+
+      proxy.web(req, res, function(e) {
+        if(e){
+          requestFailHandler(index);
+          proxyRequest(req,res,selectServer());  
+        }
+      });
+    }  
   }
 };
-
 
 // Select the next server and send the http request.
 var server = http.createServer(function(req, res) {
@@ -174,6 +117,8 @@ var server = http.createServer(function(req, res) {
 
 // Get the next server and send the upgrade request.
 server.on('upgrade', function(req, socket, head) {
+
+  console.log("in upgrade");
   var proxyIndex = selectServer();
   if(proxyIndex<0){
     renderErrorPage(res);

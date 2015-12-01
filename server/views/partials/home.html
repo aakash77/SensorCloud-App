@@ -1,4 +1,4 @@
-<div id="wrapper" ng-controller="HomeCtrl as hm" ng-init="hm.changeTemplate('templates/stats.html')">
+<div id="wrapper" ng-controller="HomeCtrl as hm" ng-init="hm.changeTemplate('templates/dashboard.html')">
     <!-- Navigation -->
     <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
     <div class="navbar-header">
@@ -8,7 +8,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" ng-click="hm.changeTemplate('templates/stats.html')" style="cursor:pointer;">Sensor Cloud</a>
+        <a class="navbar-brand" ng-click="hm.changeTemplate('templates/dashboard.html')" style="cursor:pointer;">Sensor Cloud</a>
     </div>
     <!-- /.navbar-header -->
 
@@ -19,11 +19,6 @@
                 <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
             </a>
             <ul class="dropdown-menu dropdown-user">
-                <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
-                </li>
-                <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-                </li>
-                <li class="divider"></li>
                 <li><a ng-click="hm.logoutBtn()"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                 </li>
             </ul>
@@ -37,9 +32,11 @@
         <div class="sidebar-nav navbar-collapse">
             <ul class="nav" id="side-menu">
                 <li>
-                    <a ng-click="hm.changeTemplate('templates/stats.html')" style="cursor:pointer;"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                    <a ng-click="hm.changeTemplate('templates/dashboard.html')" style="cursor:pointer;"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                 </li>
-                
+                <li>
+                    <a ng-click="hm.changeTemplate('templates/stats.html')" style="cursor:pointer;"><i class="fa fa-bar-chart fa-fw"></i> Graphs</a>
+                </li>           
                 <li>
                     <a ng-click="hm.changeTemplate('templates/sensorTable.html')" style="cursor:pointer;"><i class="fa fa-table fa-fw"></i>Tables</a>
                 </li>

@@ -1,39 +1,57 @@
 'use strict';
-sensorCloud.controller("SensorGraphCtrl", function($scope,DataService,GraphService) {
+sensorCloud.controller("SensorGraphCtrl", function($scope,$window,DataService,GraphService) {
 
   var sgc = this;
 
   sgc.getSensorData = function(){
-
-    //Group By options
-    sgc.GROUPS = GROUP_OPTIONS;
-    sgc.group = sgc.GROUPS[0];
-    sgc.groupBy = sgc.group.values[0];
-
+    $scope.user_id = $window.sessionStorage.userId;
+    //Group By options and sensor data
+    sgc.getUserSensorInfo();
     //Yaxis filter options
     sgc.YAXIS_OPTIONS = YAXIS_OPTIONS;
     sgc.yAxisFilter = YAXIS_OPTIONS[0];
-
-    console.log("sgc.group");
-    console.log(sgc.group);
-    console.log("sgc.groupBy");
-    console.log(sgc.groupBy);
-    console.log("sgc.yAxisFilter");
-    console.log(sgc.yAxisFilter);
-
-    sgc.getSensorDataServer();
-
+    
 };
-
+  //Get sensor data
   sgc.getSensorDataServer = function(){
     var params = {
           group : sgc.group.group,
           value : sgc.groupBy
         };
-    DataService.getData(URLs.SENSOR_DATA,params).success(function(response){
+    var urlParam = "/"+$scope.user_id+"/sensor_data";
+    DataService.getData(URLs.USER_DATA+urlParam,params).success(function(response){
           sgc.serverGraphData = response.data;
-          console.log(response);
           sgc.filterGraph(sgc.serverGraphData);
+      });
+  };
+  //Get sensor Info
+  sgc.getUserSensorInfo = function(){
+
+      var urlParam = "/"+$scope.user_id+"/sensors";
+      DataService.getData(URLs.USER_DATA+urlParam,{}).success(function(response){
+          
+          var areas = response.data.map(function(sensor){
+            return sensor.area;
+          });
+          var cities = response.data.map(function(sensor){
+            return sensor.city;
+          });
+
+          sgc.GROUPS=[
+                  {
+                    group:'area',
+                    values:areas,
+                    group_title : 'Area'
+                  },
+                  {
+                    group:'city',
+                    values:cities,
+                    group_title:'City'
+                  }];
+          
+          sgc.group = sgc.GROUPS[0];
+          sgc.groupBy = sgc.group.values[0];
+          sgc.getSensorDataServer();
       });
   };
 	
