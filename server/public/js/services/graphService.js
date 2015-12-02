@@ -38,7 +38,7 @@ sensorCloud.service('GraphService', function() {
       }
       var xAxisTickFormatFunction = function() {
             return function(d) {
-              return d3.time.format('%H:%M')(new Date(d));
+              return d3.time.format('%H:%M:%S')(new Date(d));
               //return d3.time.format("%y-%m-%d")(new Date(d));
             };
           };
