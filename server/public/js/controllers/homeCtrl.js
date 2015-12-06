@@ -2,6 +2,7 @@
 sensorCloud.controller("HomeCtrl", function($scope,DataService,$window,$location) {
 
   var hm = this;
+  hm.usertype = $window.sessionStorage.userName;
 
   hm.changeTemplate = function(template){
       hm.templateView = template;

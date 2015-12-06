@@ -92,6 +92,19 @@ module.exports = (function(){
 	});
 
 	//Get Sensor City Area details
+	api.get('/sensor/health',function(req,res){
+
+		var id = req.params.id;
+
+		infosensors.find({},function(err,data){
+			if(err)
+				res.status(500).json({data:"error while removing data"});
+			else
+				res.status(200).json({data:data});
+		});
+	});
+
+		//Get Sensor health details
 	api.get('/sensor/:id',function(req,res){
 
 		var id = req.params.id;
@@ -103,6 +116,7 @@ module.exports = (function(){
 				res.status(200).json({data:data});
 		});
 	});
+
 
 
 	//Get user sensors info

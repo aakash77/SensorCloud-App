@@ -1,0 +1,25 @@
+<div ng-controller="AdminCtrl as ac" ng-init="ac.getSensorData()" >
+<div class="row" style="padding-top:5%;">
+
+        <div class="col-xs-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Sensor Health</div>
+                <div class="panel-body">
+                    <table ng-table="ac.sensorHealth" class="table" show-filter="true">
+                        <tr ng-repeat="sensor in $data">
+                            <td style="width:5%" title="'SensorId'" filter="{ sensorid: 'number'}" sortable="'sensorid'">
+                                {{sensor.sensorid}}</td>
+                            <td title="'Area'" filter="{ area: 'text'}" sortable="'area'">
+                                {{sensor.area}}</td>
+                            <td title="'City'" filter="{ city: 'text'}" sortable="'city'">
+                                {{sensor.city}}</td>
+                            <td title="'Health'" sortable="'health'">
+                                <span ng-class="{'label label-danger': (sensor.health == 'Not Working'), 'label label-primary': (sensor.health == 'Good')}">{{sensor.health}}</span></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
