@@ -42,6 +42,31 @@ module.exports = (function(){
 		});
 	});
 
+	//Get sensor by user TIMEBOUND
+	api.get('/user/:id/sensor_data/:fromdate/:todate',function(req,res){
+		var id = req.params.id;
+		var fromdate = req.params.fromdate;
+		var todate = req.params.todate;
+		
+		sensoruser.find({'user_id':id},'sensor_id -_id',{sort:{timestamp:1}},function(err,sensorIds){
+			var sensors = sensorIds.map(function(sensor){
+				return sensor.sensor_id;
+			});
+			var group = req.query.group;
+			var value = req.query.value;
+			var filter = {"timestamp": {"$gte": fromdate, "$lt": todate}};
+			if(group && value)
+				filter[group] = value;
+			
+			sensordata.find().where(filter).where('sensorid').in(sensors).exec(function(err,data){
+				if(err)
+					res.status(500).json({data:"error while fetching data"});
+				else
+					res.status(200).json({data:data});
+			});
+		});
+	});
+
 	//Add User Sensor Entry
 	api.post('/user/:id/sensor/:sensorId',function(req,res){
 
