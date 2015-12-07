@@ -22,6 +22,8 @@
             <ul class="dropdown-menu dropdown-user">
                 <li><a ng-click="hm.logoutBtn()"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                 </li>
+                <li ng-if="hm.usertype == 'admin'"><a ng-click="hm.changeTemplate('templates/sensorRequest.html')"><i class="fa fa-upload fa-fw"></i> Sensor Requests</a>
+                </li>
             </ul>
             <!-- /.dropdown-user -->
         </li>
@@ -48,7 +50,10 @@
                     <a ng-click="hm.changeTemplate('templates/billing.html')" style="cursor:pointer;"><i class="fa fa-shopping-cart fa-fw"></i> Billing</a>
                 </li>
                 <li ng-if="hm.usertype == 'admin'">
-                    <a ng-click="hm.changeTemplate('templates/adminPanel.html')" style="cursor:pointer;"><i class="fa fa-shopping-cart fa-fw"></i> Admin Panel</a>
+                    <a ng-click="hm.changeTemplate('templates/adminPanel.html')" style="cursor:pointer;"><i class="fa fa-binoculars fa-fw"></i> Admin Panel</a>
+                </li>
+                <li ng-if="hm.usertype == 'admin'">
+                    <a ng-click="hm.changeTemplate('templates/sensorOwner.html')" style="cursor:pointer;"><i class="fa fa-android fa-fw"></i> Sensor Owners</a>
                 </li>
             </ul>
         </div>

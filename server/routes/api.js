@@ -1,7 +1,8 @@
 var api = require('express').Router();
 var sensordata = require('../models/sensordata'),
 	sensoruser = require('../models/sensoruser'),
-	infosensors = require('../models/infosensors');
+	infosensors = require('../models/infosensors'),
+	sensorrequest = require('../models/sensorrequest');
 
 module.exports = (function(){
 
@@ -116,9 +117,50 @@ module.exports = (function(){
 		});
 	});
 
+	//Approve new sensor request(insert into sensorinfo collection)
+	api.post('/sensor/sensorRequest',function(req,res){
+		var params = {
+			sensorid : req.body.sensorreq.sensorid,
+			area : req.body.sensorreq.area,
+			city : req.body.sensorreq.city,
+			sensor_type: req.body.sensorreq.sensor_type,
+			sensor_owner_name: req.body.sensorreq.sensor_owner_name,
+			sensor_owner_id: req.body.sensorreq.sensor_owner_id,
+			health: req.body.sensorreq.health
+		};
+		console.log(params);
+		var newSensorEntry = new infosensors(params);
+		newSensorEntry.save(function(err,newEntry){
+			if(err)
+				res.status(500).json({data:err});
+			else
+				res.status(200).json({data:newEntry});
+		});
+	});
+
+	//Update status of Request for adding Sensors
+	api.put('/sensor/RequeststatusUpdate',function(req,res){
+		console.log("Request status Update");
+		var id = req.body.sensorreq.sensorid;
+		sensorrequest.findOne({'sensorid':id}, function (err, addreq) {
+			addreq.request_status = "Approved";
+		    return addreq.save(function (err) {
+		      if (!err) {
+		        res.status(200).json({data:addreq});
+		    	console.log("updated");}
+		      else
+		        res.status(500).json({data:"error while removing data"});
+		      
+
+		    });
+		  });
+
+
+
+	});
+
 	//Get Sensor City Area details
 	api.get('/sensor/health',function(req,res){
-
 		var id = req.params.id;
 
 		infosensors.find({},function(err,data){
@@ -141,6 +183,19 @@ module.exports = (function(){
 				res.status(200).json({data:data});
 		});
 	});
+
+			//Get Sensor Requests
+	api.get('/addrequest',function(req,res){
+		console.log("inside add reqests");
+		sensorrequest.find({},function(err,data){
+			if(err)
+				res.status(500).json({data:"error while removing data"});	
+			else
+				res.status(200).json({data:data});
+		});
+	});
+
+
 
 
 

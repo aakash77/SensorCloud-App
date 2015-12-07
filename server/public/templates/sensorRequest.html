@@ -1,25 +1,32 @@
-<div ng-controller="AdminCtrl as ac" ng-init="ac.getSensorData()" >
+<div ng-controller="RequestCtrl as rc" ng-init="rc.getSensorData()" >
 <div class="row" style="padding-top:5%;">
 
         <div class="col-xs-12">
             <div class="panel panel-primary">
                 <div class="panel-heading">Sensor Health</div>
                 <div class="panel-body">
-                    <table ng-table="ac.sensorHealth" class="table" show-filter="true">
+                    <table ng-table="rc.sensorHealthData" class="table" show-filter="true">
                         <tr ng-repeat="sensor in $data">
+
                             <td style="width:5%" title="'SensorId'" filter="{ sensorid: 'number'}" sortable="'sensorid'">
                                 {{sensor.sensorid}}</td>
+
                             <td title="'Area'" filter="{ area: 'text'}" sortable="'area'">
                                 {{sensor.area}}</td>
+
                             <td title="'City'" filter="{ city: 'text'}" sortable="'city'">
                                 {{sensor.city}}</td>
+
                             <td title="'Sensor Type'" filter="{ sensor_type: 'text'}" sortable="'sensor_type'">{{sensor.sensor_type}}</td>
-                            <td title="'Owner'" filter="{ sensor_owner_name: 'text'}" sortable="'sensor_owner_name'">
-                                {{sensor.sensor_owner_name}}</td>
-                            <td title="'Owner Id'" filter="{ sensor_owner_id: 'text'}" sortable="'sensor_owner_id'">
-                                {{sensor.sensor_owner_id}}</td>
-                            <td title="'Health'" sortable="'health'">
-                                <span ng-class="{'label label-danger': (sensor.health == 'Not Working'), 'label label-primary': (sensor.health == 'Good')}">{{sensor.health}}</span></td>
+
+                            <td title="'Owner'" filter="{ sensor_owner_name: 'text'}" sortable="'sensor_owner_name'">{{sensor.sensor_owner_name}}</td>
+
+                            <td title="'Owner Id'" filter="{ sensor_owner_id: 'text'}" sortable="'sensor_owner_id'">{{sensor.sensor_owner_id}}</td>
+
+                            <td title="'Status'" filter="{ request_status: 'text'}" sortable="'request_status'">{{sensor.request_status}}</td>
+
+                            <td title="'Action'">
+                            <button ng-if="sensor.request_status=='Pending'" type="button" class="btn btn-primary" ng-click="rc.approveRequest(sensor)">Approve</button></td>
                         </tr>
                     </table>
                 </div>
